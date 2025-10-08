@@ -24,6 +24,9 @@ The example should use a feature file to call a stored procedure in the oracle d
 | USERNAME | VARCHAR2(50) | not null                            |
 | AGE      | NUMBER(3)    | NOT NULL                            |
 
+### Sequences
+- `USER_ID_SEQ` - generates primary keys for USERS.id
+
 ### Subprograms
 
 1. Procedure **INSERT_USER**
@@ -38,6 +41,11 @@ The example should use a feature file to call a stored procedure in the oracle d
 3. Procedure **DELETE_USER**
    - Parameters: IN username VARCHAR2(40), OUT rows_deleted.
    - Behavior: Deletes user if exists
+
+#### Error Handling
+- **Duplicate username in INSERT_USER**: Let Oracle raise UNIQUE constraint violation exception
+- **Non-existent user in GET_USER**: Return empty cursor (not an error - handle gracefully)
+- **Non-existent user in DELETE_USER**: Set rows_deleted = 0 (not an error - handle gracefully)
 
 ## Project Structure
 The feature file should be placed in src/test/resources/features/ and should test the following:
@@ -62,15 +70,16 @@ src/
             features/
                 user-operations/
                     user-operations.feature
-        karate-config.js
-        db/
-            01_schema.sql
-            02_procedures.sql
+            karate-config.js
+            db/
+                01_schema.sql
+                02_procedures.sql
 
 ### Database Helper
 Create `src/test/java/database/UserOperations.java`:
 - Method: `callInsertUser(connection, username, age)` → returns ID
 - Method: `callGetUser(connection, username)` → returns ResultSet as List<Map>
+  Note: Unwrap the SYS_REFCURSOR and convert to List<Map<String, Object>>
 - Method: `callDeleteUser(connection, username)` → returns count
 These will be called from feature files via `Java.type('database.UserOperations')`
 
@@ -79,7 +88,7 @@ These will be called from feature files via `Java.type('database.UserOperations'
 Add a JUnit test runner class in `src/test/java` to run the Karate feature files.  For example:
 
 ```java
-package karate;
+package testrunner;
 
 import com.intuit.karate.junit5.Karate;
 import org.junit.jupiter.api.Test;
@@ -98,8 +107,6 @@ class KarateTests {
 
 ### Karate Configuration
 - Create `karate-config.js` in `src/test/resources/`
-- Configure database connection for Karate to use
-- initialize the test container in karate-config.js
 
 ### SQL Scripts
 - Create SQL scripts in: `src/test/resources/db/`
@@ -168,10 +175,12 @@ test {
 - Feature files will execute against the containerized Oracle database
 - Container will shut down after tests complete
 
-### Testcontainers Setup
-Create `TestContainerSetup.java` in `src/test/java/karate/`:
-- Use `@BeforeAll` to start Oracle container
-- Execute SQL scripts: 01_schema.sql, 02_procedures.sql
-- Pass JDBC URL to karate-config.js via System properties
-- Use `@AfterAll` to stop container
+### Oracle Container Setup
+Create `src/test/java/testcontainers/OracleContainerSetup.java`:
+- Start container with @BeforeAll (static method)
+- Execute SQL scripts via withInitScript()
+- Store JDBC URL in static field
+- Stop container with @AfterAll
 
+In karate-config.js:
+- Access container URL via Java.type('testcontainers.OracleContainerSetup').getJdbcUrl()
