@@ -63,7 +63,7 @@ public class OracleContainerSetup {
                     inPlsql = true;
                 }
                 if (inPlsql && "/".equals(trimmed)) {
-                    // end of PL/SQL; execute accumulated block; keep trailing semicolon
+                    // end of PL/SQL; execute accumulated block
                     executeStatement(conn, sb.toString(), true);
                     sb.setLength(0);
                     inPlsql = false;
@@ -71,22 +71,21 @@ public class OracleContainerSetup {
                 }
                 sb.append(line).append('\n');
                 if (!inPlsql && trimmed.endsWith(";")) {
-                    // simple SQL statement; strip trailing semicolon
                     executeStatement(conn, sb.toString(), false);
                     sb.setLength(0);
                 }
             }
             // execute any trailing statement without delimiter
             if (sb.length() > 0) {
-                // treat as simple SQL by default
+                // best-effort: treat as non-PL/SQL by default
                 executeStatement(conn, sb.toString(), false);
             }
         }
     }
 
-    private static void executeStatement(Connection conn, String sql, boolean keepSemicolon) throws SQLException {
+    private static void executeStatement(Connection conn, String sql, boolean keepTrailingSemicolon) throws SQLException {
         String toExec = sql.trim();
-        if (toExec.endsWith(";") && !keepSemicolon) {
+        if (!keepTrailingSemicolon && toExec.endsWith(";")) {
             toExec = toExec.substring(0, toExec.length() - 1);
         }
         try (Statement st = conn.createStatement()) {
