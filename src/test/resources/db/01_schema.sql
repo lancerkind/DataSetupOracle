@@ -1,0 +1,19 @@
+-- Schema and sequence
+CREATE TABLE USERS (
+    ID        NUMBER        PRIMARY KEY,
+    USERNAME  VARCHAR2(50)  NOT NULL UNIQUE,
+    AGE       NUMBER(3)     NOT NULL
+);
+
+CREATE SEQUENCE USER_ID_SEQ START WITH 1 INCREMENT BY 1 NOCACHE NOCYCLE;
+
+-- For id generation via trigger (optional, we will assign in procedure)
+-- CREATE OR REPLACE TRIGGER USERS_BI
+-- BEFORE INSERT ON USERS
+-- FOR EACH ROW
+-- BEGIN
+--   IF :NEW.ID IS NULL THEN
+--     SELECT USER_ID_SEQ.NEXTVAL INTO :NEW.ID FROM dual;
+--   END IF;
+-- END;
+/

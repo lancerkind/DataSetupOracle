@@ -97,9 +97,8 @@ class KarateTests {
 
     @Test
     Karate testAll() {
-        return Karate.run().relativeTo(getClass());
+        return Karate.run("classpath:features");
     }
-
 }
 ```
 ### Database Connection

@@ -5,11 +5,28 @@ plugins {
 group = 'biz.agilenoir'
 version = '1.0-SNAPSHOT'
 
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+
 repositories {
     mavenCentral()
 }
 
 dependencies {
+    // Oracle JDBC driver
+    testImplementation 'com.oracle.database.jdbc:ojdbc11:23.9.0.25.07'
+
+    // Karate test framework
+    testImplementation 'io.karatelabs:karate-core:1.5.2.RC5'
+    testImplementation 'io.karatelabs:karate-junit5:1.5.2.RC5'
+
+    // Testcontainers Oracle Free
+    testImplementation 'org.testcontainers:oracle-free:1.21.3'
+
+
+    // JUnit 5 (Karate uses JUnit platform runner)
     testImplementation platform('org.junit:junit-bom:5.10.0')
     testImplementation 'org.junit.jupiter:junit-jupiter'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
@@ -17,4 +34,6 @@ dependencies {
 
 test {
     useJUnitPlatform()
+    // Allow passing Karate options via -Dkarate.options
+    systemProperty 'karate.options', System.properties.getProperty('karate.options')
 }
