@@ -14,7 +14,8 @@ public class KarateTests {
 
     @Karate.Test
     Karate testAll() {
-        return Karate.run().relativeTo(getClass());
+        // Run all features under classpath:features
+        return Karate.run("classpath:features");
     }
 
     @AfterAll

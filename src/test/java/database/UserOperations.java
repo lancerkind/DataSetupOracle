@@ -10,10 +10,13 @@ public class UserOperations {
     // Convenience: open a new Connection using Testcontainers config
     private static Connection openConnection() throws Exception {
         Class.forName(testcontainers.OracleContainerSetup.getDriverClassName());
-        return DriverManager.getConnection(
+        Connection conn = DriverManager.getConnection(
                 testcontainers.OracleContainerSetup.getJdbcUrl(),
                 testcontainers.OracleContainerSetup.getUsername(),
                 testcontainers.OracleContainerSetup.getPassword());
+        // Disable auto-commit to allow explicit transaction control in tests
+        conn.setAutoCommit(false);
+        return conn;
     }
 
     public static long callInsertUser(Connection conn, String username, int age) throws Exception {

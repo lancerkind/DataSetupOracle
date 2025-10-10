@@ -183,3 +183,35 @@ Create `src/test/java/testcontainers/OracleContainerSetup.java`:
 
 In karate-config.js:
 - Access container URL via Java.type('testcontainers.OracleContainerSetup').getJdbcUrl()
+
+# Karate Resources
+API documentation: https://javadoc.io/doc/io.karatelabs/karate-junit5/latest/com/intuit/karate/junit5/Karate.html
+
+# Troubleshooting
+## Problem: Testcontainer fails to start. Test execution logs (mentioned in stack trace that it's located at: file:///Users/<user>/IdeaProjects/DataSetupOracle/build/reports/tests/test/index.html) show: /Users/<user>/.docker/run/docker.sock' does not exist.
+Which is created when Docker Desktop is *running*.
+'''
+09:15:40.110 [Test worker] DEBUG org.testcontainers.utility.TestcontainersConfiguration -- Testcontainers configuration overrides will be loaded from file:/Users/lancer/.testcontainers.properties
+09:15:40.119 [Test worker] DEBUG org.testcontainers.utility.TestcontainersConfiguration -- Attempted to read Testcontainers configuration file at file:/Users/lancer/.testcontainers.properties but the file was not found. Exception message: FileNotFoundException: /Users/lancer/.testcontainers.properties (No such file or directory)
+09:15:40.120 [Test worker] INFO org.testcontainers.images.PullPolicy -- Image pull policy will be performed by: DefaultPullPolicy()
+09:15:40.121 [Test worker] INFO org.testcontainers.utility.ImageNameSubstitutor -- Image name substitution will be performed by: DefaultImageNameSubstitutor (composite of 'ConfigurationFileImageNameSubstitutor' and 'PrefixingImageNameSubstitutor')
+09:15:40.124 [Test worker] INFO org.testcontainers.DockerClientFactory -- Testcontainers version: 1.21.3
+09:15:40.212 [Test worker] DEBUG org.testcontainers.dockerclient.DockerClientProviderStrategy -- Trying out strategy: UnixSocketClientProviderStrategy
+09:15:40.213 [Test worker] DEBUG org.testcontainers.dockerclient.DockerClientProviderStrategy -- UnixSocketClientProviderStrategy: failed with exception InvalidConfigurationException (Could not find unix domain socket). Root cause NoSuchFileException (/var/run/docker.sock)
+09:15:40.214 [Test worker] DEBUG org.testcontainers.dockerclient.DockerClientProviderStrategy -- Trying out strategy: DockerDesktopClientProviderStrategy
+09:15:40.214 [Test worker] DEBUG org.testcontainers.dockerclient.DockerDesktopClientProviderStrategy -- '/Users/lancer/.docker/desktop' does not exist.
+09:15:40.215 [Test worker] DEBUG org.testcontainers.dockerclient.DockerDesktopClientProviderStrategy -- '/Users/lancer/.docker/run/docker.sock' does not exist.
+09:15:40.215 [Test worker] DEBUG org.testcontainers.dockerclient.DockerClientProviderStrategy -- DockerDesktopClientProviderStrategy: failed with exception NullPointerException (Cannot invoke "java.nio.file.Path.toString()" because the return value of "org.testcontainers.dockerclient.DockerDesktopClientProviderStrategy.getSocketPath()" is null)
+09:15:40.216 [Test worker] INFO org.testcontainers.dockerclient.DockerMachineClientProviderStrategy -- docker-machine executable was not found on PATH ([/Users/lancer/.nvm/versions/node/v22.18.0/bin, /Library/Frameworks/Python.framework/Versions/3.12/bin, /usr/local/bin, /System/Cryptexes/App/usr/bin, /usr/bin, /bin, /usr/sbin, /sbin, /var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin, /var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin, /var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin, /opt/X11/bin, /Library/Apple/usr/bin, /usr/local/git/bin, /usr/local/bin])
+09:15:40.216 [Test worker] ERROR org.testcontainers.dockerclient.DockerClientProviderStrategy -- Could not find a valid Docker environment. Please check configuration. Attempted configurations were:
+UnixSocketClientProviderStrategy: failed with exception InvalidConfigurationException (Could not find unix domain socket). Root cause NoSuchFileException (/var/run/docker.sock)
+DockerDesktopClientProviderStrategy: failed with exception NullPointerException (Cannot invoke "java.nio.file.Path.toString()" because the return value of "org.testcontainers.dockerclient.DockerDesktopClientProviderStrategy.getSocketPath()" is null)As no valid configuration was found, execution cannot continue.
+See https://java.testcontainers.org/on_failure.html for more details.
+'''
+### Solution:
+Start Docker Desktop.
+
+## Karate tests fail and I'm unclear why.
+### See the test report out and "click in" until you get to staketrace.
+Test report is listed on the last line displayed by the test runner.  For example:
+file:///Users/<user>/IdeaProjects/DataSetupOracle/build/reports/tests/test/index.html

@@ -10,7 +10,7 @@ Feature: User operations via stored procedures
     * def age = 25
     * def id = UserOps.callInsertUser(null, username, age)
     * def rows = UserOps.callGetUser(null, username)
-    * match rows.length == 1
+    * match karate.sizeOf(rows) == 1
     * match rows[0].USERNAME == username
     * match rows[0].AGE == age
     # Cleanup
@@ -24,4 +24,4 @@ Feature: User operations via stored procedures
     * def deleted = UserOps.callDeleteUser(null, username)
     * match deleted == 1
     * def rows = UserOps.callGetUser(null, username)
-    * match rows.length == 0
+    * match karate.sizeOf(rows) == 0

@@ -1,4 +1,5 @@
 -- Combined init: schema + procedures
+
 -- Schema and sequence
 CREATE TABLE USERS (
     ID        NUMBER        PRIMARY KEY,
@@ -7,7 +8,6 @@ CREATE TABLE USERS (
 );
 
 CREATE SEQUENCE USER_ID_SEQ START WITH 1 INCREMENT BY 1 NOCACHE NOCYCLE;
-/
 
 -- INSERT_USER: inserts a user, raises unique constraint if username exists
 CREATE OR REPLACE PROCEDURE INSERT_USER(
