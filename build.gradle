@@ -36,4 +36,5 @@ test {
     useJUnitPlatform()
     // Allow passing Karate options via -Dkarate.options
     systemProperty 'karate.options', System.properties.getProperty('karate.options')
+    systemProperty 'karate.output', 'summary'
 }

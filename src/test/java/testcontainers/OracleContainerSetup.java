@@ -76,7 +76,7 @@ public class OracleContainerSetup {
                 }
             }
             // execute any trailing statement without delimiter
-            if (sb.length() > 0) {
+            if (!sb.isEmpty()) {
                 // best-effort: treat as non-PL/SQL by default
                 executeStatement(conn, sb.toString(), false);
             }
