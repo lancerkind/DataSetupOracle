@@ -30,6 +30,9 @@ dependencies {
     testImplementation platform('org.junit:junit-bom:5.10.0')
     testImplementation 'org.junit.jupiter:junit-jupiter'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+    // logging used by Karate, testcontainers, and docker
+    testImplementation 'ch.qos.logback:logback-classic:1.5.20'
 }
 
 test {
@@ -37,4 +40,9 @@ test {
     // Allow passing Karate options via -Dkarate.options
     systemProperty 'karate.options', System.properties.getProperty('karate.options')
     systemProperty 'karate.output', 'summary'
+    testLogging {
+        events "failed"  // Only show failures
+        showStandardStreams = false
+    }
+
 }

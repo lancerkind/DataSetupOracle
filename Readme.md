@@ -188,9 +188,20 @@ In karate-config.js:
 API documentation: https://javadoc.io/doc/io.karatelabs/karate-junit5/latest/com/intuit/karate/junit5/Karate.html
 
 # Troubleshooting
+## Problem: Karate tests fail and I'm unclear why.
+### Solution: See the test report out and "click in" until you get to staketrace.
+Test report is listed on the last line displayed by the test runner.  For example:
+file:///Users/<user>/IdeaProjects/DataSetupOracle/build/reports/tests/test/index.html
+
+## The test report output has too much chatter from the test container to be practical. How can I reduce that?
+### Confirm that test/resources/logback-test.xml is configured for ERROR level logging.  Confirm that a logslf4j implementation is provided, such as:
+```gradle
+testImplementation 'ch.qos.logback:logback-classic:1.5.20
+```
+
 ## Problem: Testcontainer fails to start. Test execution logs (mentioned in stack trace that it's located at: file:///Users/<user>/IdeaProjects/DataSetupOracle/build/reports/tests/test/index.html) show: /Users/<user>/.docker/run/docker.sock' does not exist.
 Which is created when Docker Desktop is *running*.
-'''
+```text
 09:15:40.110 [Test worker] DEBUG org.testcontainers.utility.TestcontainersConfiguration -- Testcontainers configuration overrides will be loaded from file:/Users/lancer/.testcontainers.properties
 09:15:40.119 [Test worker] DEBUG org.testcontainers.utility.TestcontainersConfiguration -- Attempted to read Testcontainers configuration file at file:/Users/lancer/.testcontainers.properties but the file was not found. Exception message: FileNotFoundException: /Users/lancer/.testcontainers.properties (No such file or directory)
 09:15:40.120 [Test worker] INFO org.testcontainers.images.PullPolicy -- Image pull policy will be performed by: DefaultPullPolicy()
@@ -207,11 +218,6 @@ Which is created when Docker Desktop is *running*.
 UnixSocketClientProviderStrategy: failed with exception InvalidConfigurationException (Could not find unix domain socket). Root cause NoSuchFileException (/var/run/docker.sock)
 DockerDesktopClientProviderStrategy: failed with exception NullPointerException (Cannot invoke "java.nio.file.Path.toString()" because the return value of "org.testcontainers.dockerclient.DockerDesktopClientProviderStrategy.getSocketPath()" is null)As no valid configuration was found, execution cannot continue.
 See https://java.testcontainers.org/on_failure.html for more details.
-'''
+```
 ### Solution:
 Start Docker Desktop.
-
-## Karate tests fail and I'm unclear why.
-### See the test report out and "click in" until you get to staketrace.
-Test report is listed on the last line displayed by the test runner.  For example:
-file:///Users/<user>/IdeaProjects/DataSetupOracle/build/reports/tests/test/index.html
