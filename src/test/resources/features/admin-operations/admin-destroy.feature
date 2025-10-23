@@ -1,4 +1,6 @@
-Feature: User operations
+Feature: Admin Destroy
+  This is a duplicate of another features in order to demonstrate how to organize
+  a large number of features.
 
   Background:
     * def UserOps = Java.type('database.UserOperations')

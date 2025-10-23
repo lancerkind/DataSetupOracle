@@ -1,4 +1,6 @@
-Feature: User operations
+Feature: Admin Explore
+This is a duplicate of another feature in order to demonstrate how to organize
+a large number of features.
 
   Background:
     * def UserOps = Java.type('database.UserOperations')

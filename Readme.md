@@ -184,10 +184,18 @@ Create `src/test/java/testcontainers/OracleContainerSetup.java`:
 In karate-config.js:
 - Access container URL via Java.type('testcontainers.OracleContainerSetup').getJdbcUrl()
 
-# Karate Resources
-API documentation: https://javadoc.io/doc/io.karatelabs/karate-junit5/latest/com/intuit/karate/junit5/Karate.html
+# Resources
+API documentation: 
+https://javadoc.io/doc/io.karatelabs
+https://karatelabs.github.io/karate/
+
 
 # Troubleshooting
+## Question: although karate is looking for a features directory on the classpath and I have 
+"features.somearea" in intelliJ, how is it finding my feature files?
+### Answer: In certain circumstances Intellij really is using a directory structure beneath that is "./features/somearea/".
+You'll need to look at the file structure to see what's really going on.
+
 ## Problem: Karate tests fail and I'm unclear why.
 ### Solution: See the test report out and "click in" until you get to staketrace.
 Test report is listed on the last line displayed by the test runner.  For example:

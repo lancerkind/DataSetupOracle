@@ -20,8 +20,6 @@ public class KarateTests {
 
     @AfterAll
     static void afterAll() {
-        System.out.println("Shutting down Oracle container");
         testcontainers.OracleContainerSetup.ensureStopped();
-        System.out.println("Oracle container shutdown complete");
     }
 }
