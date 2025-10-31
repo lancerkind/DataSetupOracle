@@ -1,7 +1,7 @@
 Feature: User operations
 
   Background:
-    * def UserOps = Java.type('database.UserOperations')
+    * def UserOps = Java.type('sampleoracleapplication.databasehelpers.UserOperations')
     # Ensure clean table per scenario
     * eval UserOps.truncateUsers()
 

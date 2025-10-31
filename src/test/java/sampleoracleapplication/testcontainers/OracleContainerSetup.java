@@ -1,4 +1,4 @@
-package testcontainers;
+package sampleoracleapplication.testcontainers;
 
 import org.testcontainers.oracle.OracleContainer;
 import org.testcontainers.utility.DockerImageName;

@@ -81,7 +81,7 @@ Create `src/test/java/database/UserOperations.java`:
 - Method: `callGetUser(connection, username)` → returns ResultSet as List<Map>
   Note: Unwrap the SYS_REFCURSOR and convert to List<Map<String, Object>>
 - Method: `callDeleteUser(connection, username)` → returns count
-These will be called from feature files via `Java.type('database.UserOperations')`
+These will be called from feature files via `Java.type('sampleoracleapplication.databasehelpers.database.UserOperations')`
 
 ## Implementation Requirements
 ### JUnit Test Runner
@@ -182,7 +182,7 @@ Create `src/test/java/testcontainers/OracleContainerSetup.java`:
 - Stop container with @AfterAll
 
 In karate-config.js:
-- Access container URL via Java.type('testcontainers.OracleContainerSetup').getJdbcUrl()
+- Access container URL via Java.type('sampleoracleapplication.testcontainers.testcontainers.OracleContainerSetup').getJdbcUrl()
 
 # Resources
 API documentation: 

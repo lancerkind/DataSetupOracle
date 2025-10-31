@@ -3,13 +3,14 @@ package sampleoracleapplication;
 import com.intuit.karate.junit5.Karate;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
+import sampleoracleapplication.testcontainers.OracleContainerSetup;
 
 public class KarateTests {
 
     @BeforeAll
     static void beforeAll() {
         // Ensure the Oracle container is started before any Karate feature runs
-        testcontainers.OracleContainerSetup.ensureStarted();
+        OracleContainerSetup.ensureStarted();
     }
 
     @Karate.Test
@@ -25,6 +26,6 @@ public class KarateTests {
 
     @AfterAll
     static void afterAll() {
-        testcontainers.OracleContainerSetup.ensureStopped();
+        OracleContainerSetup.ensureStopped();
     }
 }
