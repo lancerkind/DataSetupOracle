@@ -1,10 +1,10 @@
-package testrunner;
+package sampleoracleapplication;
 
 import com.intuit.karate.junit5.Karate;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 
-public class KarateTests {
+public class ApiTestHTMLReport {
 
     @BeforeAll
     static void beforeAll() {
@@ -13,9 +13,9 @@ public class KarateTests {
     }
 
     @Karate.Test
-    Karate testAll() {
-        // Run all features under classpath:features
-        return Karate.run("classpath:features");
+    Karate testAllFeatures() {
+        // pass the path to your test features directory here:
+        return Karate.run("classpath:sampleoracleapplication/");
     }
 
     @AfterAll
