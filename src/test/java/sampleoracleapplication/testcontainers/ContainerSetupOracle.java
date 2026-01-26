@@ -12,7 +12,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class OracleContainerSetup {
+public class ContainerSetupOracle {
     private static OracleContainer container;
     private static volatile boolean started = false;
 
@@ -25,10 +25,10 @@ public class OracleContainerSetup {
         }
         container.start();
         // run init SQL manually to properly handle PL/SQL blocks
-        runInitSql("db/00_init.sql");
+        runInitSql("dboracle/00_init.sql");
         started = true;
         // Stop container on JVM shutdown as a safety net
-        Runtime.getRuntime().addShutdownHook(new Thread(OracleContainerSetup::ensureStopped));
+        Runtime.getRuntime().addShutdownHook(new Thread(ContainerSetupOracle::ensureStopped));
     }
 
     private static void runInitSql(String classpathResource) {

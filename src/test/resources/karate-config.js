@@ -1,5 +1,5 @@
 function fn() {
-  var Setup = Java.type('sampleoracleapplication.testcontainers.OracleContainerSetup');
+  var Setup = Java.type('sampleoracleapplication.testcontainers.ContainerSetupOracle');
   return {
     jdbcUrl: Setup.getJdbcUrl(),
     username: Setup.getUsername(),

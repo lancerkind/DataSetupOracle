@@ -1,20 +1,20 @@
 package sampleoracleapplication.databasehelpers;
 
 import oracle.jdbc.OracleTypes;
-import sampleoracleapplication.testcontainers.OracleContainerSetup;
+import sampleoracleapplication.testcontainers.ContainerSetupOracle;
 
 import java.sql.*;
 import java.util.*;
 
-public class UserOperations {
+public class UserOperationsOracle {
 
     // Convenience: open a new Connection using Testcontainers config
     private static Connection openConnection() throws Exception {
-        Class.forName(OracleContainerSetup.getDriverClassName());
+        Class.forName(ContainerSetupOracle.getDriverClassName());
         Connection conn = DriverManager.getConnection(
-                OracleContainerSetup.getJdbcUrl(),
-                OracleContainerSetup.getUsername(),
-                OracleContainerSetup.getPassword());
+                ContainerSetupOracle.getJdbcUrl(),
+                ContainerSetupOracle.getUsername(),
+                ContainerSetupOracle.getPassword());
         // Disable auto-commit to allow explicit transaction control in tests
         conn.setAutoCommit(false);
         return conn;
