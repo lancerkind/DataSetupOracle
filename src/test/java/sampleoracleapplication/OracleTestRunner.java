@@ -5,7 +5,7 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import sampleoracleapplication.testcontainers.ContainerSetupOracle;
 
-public class RunAllFeatureTests {
+public class OracleTestRunner {
 
     @BeforeAll
     static void beforeAll() {
@@ -14,9 +14,14 @@ public class RunAllFeatureTests {
     }
 
     @Karate.Test
-    Karate testAllFeatures() {
-        // pass the path to your test features directory here:
-        return Karate.run("classpath:sampleoracleapplication/");
+    Karate testUserOperations() {
+        return Karate.run("classpath:sampleoracleapplication/user-operations/");
+    }
+
+
+    @Karate.Test
+    Karate testAdminOperations() {
+        return Karate.run("classpath:sampleoracleapplication/admin-operations");
     }
 
     @AfterAll
