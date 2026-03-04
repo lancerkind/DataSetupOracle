@@ -16,7 +16,7 @@ public class TestAllFeaturesTestRunner {
     @Karate.Test
     Karate testAllFeatures() {
         // pass the path to your test features directory here:
-        return Karate.run("classpath:sampleoracleapplication/");
+        return Karate.run("classpath:sampleoracleapplication/","classpath:samplespannerapplication/" );
     }
 
     @AfterAll
