@@ -21,7 +21,7 @@ public class ContainerSetupSpanner {
     }
 
     private static void runLiquibase() {
-        new LiquibaseMigrations().run(getJdbcUrl(), "src/main/migrations/dbSpanner/changelog/changelog.xml");
+        new LiquibaseMigrations().run(getJdbcUrl(), "dbSpanner/changelog/changelog.xml");
     }
 
     public static synchronized void ensureStopped() {

@@ -6,17 +6,19 @@ import liquibase.Liquibase;
 import liquibase.database.Database;
 import liquibase.database.DatabaseFactory;
 import liquibase.database.jvm.JdbcConnection;
-import liquibase.resource.FileSystemResourceAccessor;
+import liquibase.resource.ClassLoaderResourceAccessor;
+import liquibase.resource.ResourceAccessor;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 
 public class LiquibaseMigrations {
+    ResourceAccessor resourceAccessor = new ClassLoaderResourceAccessor();
 
     public void run(String url, String changelogPath) {
         try (Connection connection = DriverManager.getConnection(url)) {
             Database database = DatabaseFactory.getInstance().findCorrectDatabaseImplementation(new JdbcConnection(connection));
-            try (Liquibase liquibase = new Liquibase(changelogPath, new FileSystemResourceAccessor(), database)) {
+            try (Liquibase liquibase = new Liquibase(changelogPath, resourceAccessor, database)) {
                 liquibase.update(new Contexts(), new LabelExpression());
             }
         } catch (Exception e) {
@@ -27,7 +29,7 @@ public class LiquibaseMigrations {
     public void rollbackToInitial(String url, String changelogPath) {
         try (Connection connection = DriverManager.getConnection(url)) {
             Database database = DatabaseFactory.getInstance().findCorrectDatabaseImplementation(new JdbcConnection(connection));
-            try (Liquibase liquibase = new Liquibase(changelogPath, new FileSystemResourceAccessor(), database)) {
+            try (Liquibase liquibase = new Liquibase(changelogPath, resourceAccessor, database)) {
                 liquibase.rollback("initial", new Contexts(), new LabelExpression());
             }
         } catch (Exception e) {
@@ -38,7 +40,7 @@ public class LiquibaseMigrations {
     public void rollback(String url, String changelogPath, int count) {
         try (Connection connection = DriverManager.getConnection(url)) {
             Database database = DatabaseFactory.getInstance().findCorrectDatabaseImplementation(new JdbcConnection(connection));
-            try (Liquibase liquibase = new Liquibase(changelogPath, new FileSystemResourceAccessor(), database)) {
+            try (Liquibase liquibase = new Liquibase(changelogPath, resourceAccessor, database)) {
                 liquibase.rollback(count, new Contexts(), new LabelExpression());
             }
         } catch (Exception e) {
